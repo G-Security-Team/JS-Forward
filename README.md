@@ -39,7 +39,7 @@ python3 Js-forward.py
 ![image](img/7.png)
 #### 十、在Js-Forward中输入要转发出来的参数名称，即data，会生成payload
 ![image](img/8.png)
-#### 十一、将payload插入进要替换参数的位置（注意在这里setInto是动态加载的js所以是字符串，要将Js-Forward生成的payload的双引号转义一下" -> \"）
+#### 十一、将payload插入进要替换参数的位置（注意在这里setInto是动态加载的js所以是字符串，要将Js-Forward生成的payload的双引号转义一下" -> \\"）
 ![image](img/9.png)
 #### 十二、将js放行，此时js便会缓存在浏览器中，后续就算不挂代理，burp依旧可以抓取带该数据包,解密成功
 ![image](img/10.png)
