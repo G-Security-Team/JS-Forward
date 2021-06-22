@@ -1,4 +1,4 @@
-#Js-Forward 简介
+##Js-Forward 简介
 
 Js-Forward是为了解决在渗透测试过程中所遇到的WEB流量加密而开发出的脚本工具
 
@@ -18,7 +18,7 @@ Js-Forward是为了解决在渗透测试过程中所遇到的WEB流量加密而�
 - 这里举例的其实已经属于比较复杂的类型，且不包含Js-Forward所需要的jquery，希望大家可以认真看完。
 
 ####一、输入手机号，点击发送验证码
-
+![Js-Forward](0.png)
 ####二、Burp正常抓包，发现流量是加密的，并且有summary、data、encelope三个参数
 
 ####三、通过前端JS的调试，寻找到加密函数点，这里可以发现summary、data、encelope都是由此而来，函数名称setInto
