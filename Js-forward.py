@@ -59,6 +59,8 @@ def get_payload():
     while(flag):
         print("============================================================================================")
         param_name = input(">请输入要forward到Burp的参数名(输入$end结束):")
+        if param_name == "$end":
+            break
         base_payload = '$.ajax({type:\"POST\",url:\"http://127.0.0.1:28080/REQUEST\",data:BSAEDATA,async:false,success:function(resultdata){BSAEDATA=resultdata}});'
         payload = base_payload.replace('BSAEDATA',param_name)
         print('payload生成完毕:\n' + payload)
