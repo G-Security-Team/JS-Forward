@@ -64,8 +64,6 @@ def get_payload():
         base_payload = '$.ajax({type:\"POST\",url:\"http://127.0.0.1:28080/REQUEST\",data:BSAEDATA,async:false,success:function(resultdata){BSAEDATA=resultdata}});'
         payload = base_payload.replace('BSAEDATA',param_name)
         print('payload生成完毕:\n' + payload)
-        if param_name == "$end":
-            flag = False
     print("============================================================================================")
 
 
