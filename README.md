@@ -34,7 +34,7 @@ python3 Js-forward.py
 #### 五、设置后的样子
 ![image](img/6.png)
 #### 六、此时就可以启动Js-Forward了
-![image](img/3.png)
+![image](img/启动.png)
 #### 七、清除浏览器缓存，重新加载
 
 #### 八、判断一下该应用是否使用的Jquery，例子中是不包含的，所以需要将Jquery手动添加进去，若已经引用了js则这一步可以省略
