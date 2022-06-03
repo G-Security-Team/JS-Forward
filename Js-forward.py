@@ -41,18 +41,15 @@ class RequestHandler(BaseHTTPRequestHandler):
 
     do_RESPONSE = do_REQUEST
 
-
-
 def echo_server_thread():
     print('>开始监听镜像服务器,端口:{}'.format(ECHO_PORT))
-    server = HTTPServer(('', ECHO_PORT), RequestHandler)
+    server = HTTPServer(('0.0.0.0', ECHO_PORT), RequestHandler)
     server.serve_forever()
 
 def echo_forward_server_thread():
     print('>开始监听转发服务器,端口:{}'.format(FORWORD_PORT))
-    server = HTTPServer(('', FORWORD_PORT), ForwardRequestHandler)
+    server = HTTPServer(('0.0.0.0', FORWORD_PORT), ForwardRequestHandler)
     server.serve_forever()
-
 
 def get_payload():
     flag = True
@@ -61,9 +58,18 @@ def get_payload():
         param_name = input(">请输入要forward到Burp的参数名(输入$end结束):")
         if param_name == "$end":
             break
-        base_payload = '$.ajax({type:\"POST\",url:\"http://127.0.0.1:28080/REQUEST\",data:BSAEDATA,async:false,success:function(resultdata){BSAEDATA=resultdata}});'
-        payload = base_payload.replace('BSAEDATA',param_name)
-        print('payload生成完毕:\n' + payload)
+        data_type = input(">请输入" + param_name +  "的数据类型(json/string):")
+        request_type = input(">请输入请求标识(例如:REQUEST/RESPONSE):")
+        if data_type == "json":
+            base_payload = 'var xhr = new XMLHttpRequest();xhr.open(\"post\", \"http://127.0.0.1:' + str(FORWORD_PORT) + '/' + request_type + '\", false);xhr.send(JSON.stringify(' + param_name + '));' + param_name + '=JSON.parse(xhr.responseText);'
+        elif data_type == "string":
+            base_payload = 'var xhr = new XMLHttpRequest();xhr.open(\"post\", \"http://127.0.0.1:' + str(FORWORD_PORT) + '/' + request_type + '\", false);xhr.send(' + param_name + ');' + param_name + '=xhr.responseText;'
+        else:
+            print(">您的数据类型输入有误")
+            break
+        print('payload生成完毕:\n' + base_payload)
+        if param_name == "$end":
+            flag = False
     print("============================================================================================")
 
 
@@ -76,14 +82,10 @@ def banner():
 | |__' |  | \____) |         | |  | \__. | | |     \ \/\ \/ / // | |, | |    | \__/  |  
 `.____.'   \______.'        [___]  '.__.' [___]     \__/\__/  \'-;__/[___]    '.__.;__] 
 
-                                                                    Version 1.0 By Gr33k     
+                                                                    Version 2.0 By Gr33k     
 ============================================================================================
 提示:
-    本工具生成payload仅限字符串类型参数,若参数为其他类型请自行修改payload        
-    本工具依靠jquery提供ajax同步请求，使用前请自行寻找js的转发点，若测试的项目没有使用jquery,推荐手动添加
-    https:<script src=\"https://code.jquery.com/jquery-2.1.1.min.js\"></script> 
-    http:<script src=\"http://code.jquery.com/jquery-2.1.1.min.js\"></script>    
-    返回包加载进入浏览器时插入,浏览器便会将jquery加载进运行环境                                                                  
+    本工具生成payload仅限(string/json)类型参数,若参数为其他类型请自行修改payload                                        
     ''')
 
 
@@ -97,7 +99,7 @@ if __name__ == '__main__':
     t.start()
     t1.daemon = True
     t1.start()
-    print(">请启动Burp,端口:8080")
+    print(">准备就绪 请启动Burp,端口:8080")
     for t in [t, t1]:
         t.join()
 
