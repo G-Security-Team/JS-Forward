@@ -29,25 +29,11 @@ python3 Js-forward.py
 ![image](img/1.png)
 #### 三、通过前端JS的调试，寻找到加密函数点，这里可以发现summary、data、encelope都是由此而来，函数名称setInto
 ![image](img/2.png)
-#### 四、要对burp做一些设置，使得burp可以截断js
-![image](img/5.png)
-#### 五、设置后的样子
-![image](img/6.png)
-#### 六、此时就可以启动Js-Forward了
-![image](img/3.png)
-#### 七、清除浏览器缓存，重新加载
-
-#### 八、判断一下该应用是否使用的Jquery，例子中是不包含的，所以需要将Jquery手动添加进去，若已经引用了js则这一步可以省略
-![image](img/4.png)
-#### 九、burp慢慢找带有setInto的js，最终找到了
-![image](img/7.png)
-#### 十、在Js-Forward中输入要转发出来的参数名称，即data，会生成payload
+#### 四、在Js-Forward中输入要转发出来的参数名称，即data，会生成payload
 ![image](img/启动.png)
-#### 十一、将payload插入进要替换参数的位置（注意在这里setInto是动态加载的js所以是字符串，要将Js-Forward生成的payload的双引号转义一下" -> \\"，若是正常的js代码则直接复制粘贴payload即可）
-![image](img/9.png)
-#### 十二、将js放行，此时js便会缓存在浏览器中，后续就算不挂代理，burp依旧可以抓取带该数据包,解密成功
-![image](img/10.png)
-#### 十三、脚本输出请求日志
+#### 五、通过chrome浏览器的JS替换功能，将生成payload插入至原JS修改变量处。
+#### 六、启动Burp服务，正常触发业务逻辑，可抓到明文数据包。
+#### 七、脚本输出请求日志
 ![image](img/11.png)
 
 # 后记
